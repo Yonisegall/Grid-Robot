@@ -126,7 +126,7 @@ if __name__ == '__main__':
     # robot_start_location = (7, 0)
     # lamp_h = 4
     # lamp_location = (0, 4)
-    # expected Heuristic is: [11,10,9,8,7,6,5,5,4,3,2,2,1,1,0]
+    # expected Heuristic is: [11,10,9,8,7,6,5,5,4,3,2,2,1,1 ,0]
 
     start_state = grid_robot_state(board=map, robot_location=robot_start_location, lamp_height=lamp_h,
                                    lamp_location=lamp_location)
