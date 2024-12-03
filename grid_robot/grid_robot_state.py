@@ -56,8 +56,17 @@ class grid_robot_state:
         return my_neighbors
 
     # you can change the body of the function if you want
+    # def __hash__(self):
+    #     return hash((self.location, self.lamp_location, self.lamp_height, self.flatten_board()))
+
     def __hash__(self):
-        return hash((self.location, self.lamp_location, self.lamp_height, self.flatten_board()))
+        return hash((
+            self.location,  # Robot's location
+            self.lamp_location,  # Lamp's location
+            self.lamp_height,  # Height of the lamp
+            tuple(map(tuple, self.board)),  # Immutable representation of the board (tuple of tuples)
+            self.stairs  # Current stairs value
+        ))
 
     def flatten_board(self):
         # Convert the 2D board into a tuple of tuples (immutable and hashable)
@@ -107,9 +116,4 @@ class grid_robot_state:
         if row < 0 or row >= len(self.board) or col < 0 or col >= len(self.board[row]):
             return False
 
-        # Check if the cell is not a blocked cell
-        # if self.board[row][col] == -1:
-        #     return False
-        #
-        # return True
         return self.board[row][col] != -1
