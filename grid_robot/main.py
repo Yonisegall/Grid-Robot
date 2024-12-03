@@ -99,3 +99,5 @@ if __name__ == '__main__':
     # for elem in search_result:
     #     print(f'location {elem.state.get_location()} , cost = {elem.state.get_stairs()}\n')
 
+
+    print("fuck BGU")
