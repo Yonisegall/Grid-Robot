@@ -11,3 +11,6 @@ class search_node():
 
     def get_neighbors(self):
         return self.state.get_neighbors()
+
+    def get_str(self):
+        return f'{self.state.get_str()}, {self.f}'

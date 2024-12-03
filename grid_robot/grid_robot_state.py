@@ -117,3 +117,6 @@ class grid_robot_state:
             return False
 
         return self.board[row][col] != -1
+
+    def get_str(self):
+        return f'{self.location}, {self.stairs}, {self.board}'
