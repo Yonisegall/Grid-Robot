@@ -36,7 +36,10 @@ class grid_robot_state:
         for x, y in direction:
             if self.is_Valid((self.location[0] + x, self.location[1] + y)):
                 # 1: all regular neighbors
-                self.add_neighbor(my_neighbors, self.location[0] + x, self.location[1] + y, self.board, 1, 0)
+                if self.stairs == self.lamp_height and (self.location[0] + x, self.location[1] + y) == self.lamp_location:
+                    self.add_neighbor(my_neighbors, self.location[0] + x, self.location[1] + y, self.board, 2, 0)
+                else:
+                    self.add_neighbor(my_neighbors, self.location[0] + x, self.location[1] + y, self.board, 1, 0)
 
                 # # 2 : Current state is a stairs
                 # if cur_stairs_weight != 0:
