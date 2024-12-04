@@ -7,7 +7,7 @@ def base_heuristic(_grid_robot_state):
 
 
 def advanced_heuristic(_grid_robot_state):
-    robot_loc = _grid_robot_state.location
+    robot_loc_x, robot_loc_y = _grid_robot_state.location
     lamp_height = _grid_robot_state.lamp_height
     stairs_held = _grid_robot_state.stairs
 
@@ -15,19 +15,20 @@ def advanced_heuristic(_grid_robot_state):
     manhattan_dist = base_heuristic(_grid_robot_state)
 
     # 2. Height mismatch
-    height_mismatch = max(0, lamp_height - stairs_held)
+    # height_mismatch = max(0, lamp_height - stairs_held)
+    height_mismatch = lamp_height - stairs_held if lamp_height - stairs_held > 0 else 0
 
     # 3. Estimated cost to collect additional stairs (if needed)
     board = _grid_robot_state.board
     # min_stairs_cost = float('inf')
     min_stairs_cost = 0
 
-    if lamp_height > stairs_held:
+    if height_mismatch != 0:
         # Need more stairs
         for i, row in enumerate(board):
             for j, cell in enumerate(row):
                 if cell > 0:  # There are stairs here
-                    distance_to_stairs = abs(robot_loc[0] - i) + abs(robot_loc[1] - j)
+                    distance_to_stairs = abs(robot_loc_x - i) + abs(robot_loc_y - j)
                     min_stairs_cost = distance_to_stairs if distance_to_stairs > min_stairs_cost else min_stairs_cost
 
     stairs_cost = min_stairs_cost if stairs_held < lamp_height else 0

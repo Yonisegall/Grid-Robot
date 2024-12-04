@@ -108,11 +108,6 @@
 #     def get_str(self):
 #         return f'{self.location}, {self.stairs}, {self.board}'
 
-
-
-
-
-
 import copy
 
 
@@ -130,9 +125,8 @@ class grid_robot_state:
 
     @staticmethod
     def is_goal_state(_grid_robot_state):
-        bool = _grid_robot_state.get_location() == _grid_robot_state.get_lamp_location() and \
+        return _grid_robot_state.get_location() == _grid_robot_state.get_lamp_location() and \
                _grid_robot_state.get_stairs() == _grid_robot_state.get_lamp_height()
-        return bool
 
     def get_neighbors(self):
         loc_x, loc_y = self.location
@@ -169,9 +163,7 @@ class grid_robot_state:
         my_neighbors.append((new_neighbor, self.stairs + new_cost))
 
     def return_new_board(self, x, y, num):
-        # new_board = copy.deepcopy(self.board)
         new_board = [row[:] for row in self.board]  # Faster manual copy
-
         new_board[x][y] = num
         return new_board
 

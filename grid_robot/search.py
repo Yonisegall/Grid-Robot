@@ -210,14 +210,22 @@ def open_not_empty(open_set):
 
 
 def get_best(open_set):
-    val, key = heapq.heappop(open_set[0])
+    # val, key = heapq.heappop(open_set[0])
+    # # try:
+    # #     del open_set[1][key.unique]  # Attempt to delete the key
+    # # except KeyError:
+    # #     pass  # Do nothing if the key does not exist
+    #
+    # return key
 
-    # try:
-    #     del open_set[1][key.unique]  # Attempt to delete the key
-    # except KeyError:
-    #     pass  # Do nothing if the key does not exist
+    while open_not_empty(open_set):
+        val, key = heapq.heappop(open_set[0])
+        key_str = key.unique
 
-    return key
+        if key_str in open_set[1]:
+            del open_set[1][key_str]
+            return key
+    return None
 
 
 def add_to_closed(vn, closed_set):
