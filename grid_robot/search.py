@@ -1,6 +1,8 @@
 from search_node import search_node
 from grid_robot_state import grid_robot_state
 import heapq
+
+
 #
 #
 # def create_open_set():         # The Best That Works
@@ -89,11 +91,6 @@ import heapq
 #                 add_to_open(curr_neighbor, open_set)
 #
 #     return None
-
-
-
-
-
 
 
 # def create_open_set():  # Try with HashMap
@@ -193,18 +190,6 @@ import heapq
 #     return None
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def create_open_set():  # Try with HashMap
     open_new = []
     heapq.heapify(open_new)
@@ -217,7 +202,7 @@ def create_closed_set():
 
 def add_to_open(vn, open_set):
     heapq.heappush(open_set[0], (vn.f, vn))
-    open_set[1][vn.get_str()] = vn.g
+    open_set[1][vn.unique] = vn.g
 
 
 def open_not_empty(open_set):
@@ -226,41 +211,30 @@ def open_not_empty(open_set):
 
 def get_best(open_set):
     val, key = heapq.heappop(open_set[0])
-    b = open_set[1].get(key.get_str())
-    if b is not None: del open_set[1][key.get_str()]
+
+    # try:
+    #     del open_set[1][key.unique]  # Attempt to delete the key
+    # except KeyError:
+    #     pass  # Do nothing if the key does not exist
+
     return key
 
 
 def add_to_closed(vn, closed_set):
-    closed_set[vn.get_str()] = vn.g
+    closed_set[vn.unique] = vn.g
 
 
 def duplicate_in_open(vn, open_set):
-
-    key_str = vn.state.get_str()
+    key_str = vn.unique
     if key_str in open_set[1]:
         val = open_set[1][key_str]
         if val <= vn.g:
             return True
     return False
 
-    # for item in open_set:
-    #     val, key = item
-    #     if key == vn:
-    #         if val <= vn.f:
-    #             return True
-    # return False
-
 
 def duplicate_in_closed(vn, closed_set):
-
-    # for elem in closed_set:
-    #     if elem.state == vn.state:
-    #         if elem.g <= vn.g:
-    #             return True
-    # return False
-
-    key_str = vn.get_str()
+    key_str = vn.unique
     if key_str in closed_set:
         val = closed_set[key_str]
         if val <= vn.g:
@@ -300,4 +274,3 @@ def search(start_state, heuristic):
                 add_to_open(curr_neighbor, open_set)
 
     return None
-
