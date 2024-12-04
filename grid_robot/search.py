@@ -197,7 +197,7 @@ def create_open_set():  # Try with HashMap
 
 
 def create_closed_set():
-    return {}
+    return {}  # Return dictionary
 
 
 def add_to_open(vn, open_set):
