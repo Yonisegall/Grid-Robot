@@ -149,11 +149,13 @@ class grid_robot_state:
                 else:
                     self.add_neighbor(my_neighbors, loc_x + x, loc_y + y, self.board, 1, 0)
 
+        # 2: The cell is stairs
         if cur_stairs_weight != 0:
             new_board = self.return_new_board(loc_x, loc_y, 0)
             self.add_neighbor(my_neighbors, loc_x, loc_y, new_board,
                               (self.stairs * (-1)) + 1, cur_stairs_weight)
 
+        # Dropped the stairs
         if self.stairs != 0:
             new_board = self.return_new_board(loc_x, loc_y, cur_stairs_weight + self.stairs)
             self.add_neighbor(my_neighbors, loc_x, loc_y, new_board,
