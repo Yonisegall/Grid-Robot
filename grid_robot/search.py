@@ -93,103 +93,6 @@ import heapq
 #     return None
 
 
-# def create_open_set():  # Try with HashMap
-#     open_new = []
-#     heapq.heapify(open_new)
-#     return open_new, {}  # Return tuple with heap and dictionary
-#
-#
-# def create_closed_set():
-#     return {}
-#
-#
-# def add_to_open(vn, open_set):
-#     heapq.heappush(open_set[0], (vn.f, vn))
-#     open_set[1][vn.state.get_str()] = vn.f
-#
-#
-# def open_not_empty(open_set):
-#     return len(open_set[0]) != 0  # Return True if the heap is not empty
-#
-#
-# def get_best(open_set):
-#     val, key = heapq.heappop(open_set[0])
-#     del open_set[1][key.state.get_str()]
-#     return key
-#
-#
-# def add_to_closed(vn, closed_set):
-#     closed_set[vn.state.get_str()] = vn.f
-#
-#
-# def duplicate_in_open(vn, open_set):
-#     # val = open_set[1].get(vn.state.get_str())
-#     # if val is None: return False
-#     # return val <= vn.g
-#
-#     key_str = vn.state.get_str()
-#     if key_str in open_set[1]:
-#         val = open_set[1][key_str]
-#         return val >= vn.g
-#     return False
-#
-#     # for item in open_set:
-#     #     val, key = item
-#     #     if key == vn:
-#     #         if val <= vn.f:
-#     #             return True
-#     # return False
-#
-#
-# def duplicate_in_closed(vn, closed_set):
-#
-#     # for elem in closed_set:
-#     #     if elem.state == vn.state:
-#     #         if vn.g >= elem.g:
-#     #             return True
-#     # return False
-#
-#     key_str = vn.state.get_str()
-#     if key_str in closed_set:
-#         val = closed_set[key_str]
-#         return val >= vn.g
-#     return False
-#
-#
-# # Helper function to debug and print the path
-# def print_path(path):
-#     for i in range(len(path) - 1):
-#         print(f"[{path[i].state.get_state_str()}]", end=", ")
-#     print(path[-1].state.get_state_str())
-#
-#
-# def search(start_state, heuristic):
-#     open_set = create_open_set()
-#     closed_set = create_closed_set()
-#     start_node = search_node(start_state, 0, heuristic(start_state))
-#     add_to_open(start_node, open_set)
-#
-#     while open_not_empty(open_set):
-#
-#         current = get_best(open_set)
-#         if grid_robot_state.is_goal_state(current.state):
-#             path = []
-#             while current:
-#                 path.append(current)
-#                 current = current.prev
-#             path.reverse()
-#             return path
-#
-#         add_to_closed(current, closed_set)
-#
-#         for neighbor, edge_cost in current.get_neighbors():
-#             curr_neighbor = search_node(neighbor, current.g + edge_cost, heuristic(neighbor), current)
-#             if not duplicate_in_open(curr_neighbor, open_set) and not duplicate_in_closed(curr_neighbor, closed_set):
-#                 add_to_open(curr_neighbor, open_set)
-#
-#     return None
-
-
 def create_open_set():  # Try with HashMap
     open_new = []
     heapq.heapify(open_new)
@@ -197,7 +100,7 @@ def create_open_set():  # Try with HashMap
 
 
 def create_closed_set():
-    return {}  # Return dictionary
+    return {}
 
 
 def add_to_open(vn, open_set):
@@ -211,11 +114,10 @@ def open_not_empty(open_set):
 
 def get_best(open_set):
     # val, key = heapq.heappop(open_set[0])
-    # # try:
-    # #     del open_set[1][key.unique]  # Attempt to delete the key
-    # # except KeyError:
-    # #     pass  # Do nothing if the key does not exist
-    #
+    # try:
+    #     del open_set[1][key.unique]  # Attempt to delete the key
+    # except KeyError:
+    #     pass  # Do nothing if the key does not exist
     # return key
 
     while open_not_empty(open_set):
@@ -229,24 +131,22 @@ def get_best(open_set):
 
 
 def add_to_closed(vn, closed_set):
-    closed_set[vn.unique] = vn.g
+    closed_set[vn.state.unique] = vn.f
 
 
 def duplicate_in_open(vn, open_set):
-    key_str = vn.unique
+    key_str = vn.state.unique
     if key_str in open_set[1]:
         val = open_set[1][key_str]
-        if val <= vn.g:
-            return True
+        return val >= vn.g
     return False
 
 
 def duplicate_in_closed(vn, closed_set):
-    key_str = vn.unique
+    key_str = vn.state.unique
     if key_str in closed_set:
         val = closed_set[key_str]
-        if val <= vn.g:
-            return True
+        return val >= vn.g
     return False
 
 
@@ -282,3 +182,96 @@ def search(start_state, heuristic):
                 add_to_open(curr_neighbor, open_set)
 
     return None
+
+# def create_open_set():  # Try with HashMap
+#     open_new = []
+#     heapq.heapify(open_new)
+#     return open_new, {}  # Return tuple with heap and dictionary
+#
+#
+# def create_closed_set():
+#     return {}  # Return dictionary
+#
+#
+# def add_to_open(vn, open_set):
+#     heapq.heappush(open_set[0], (vn.f, vn))
+#     open_set[1][vn.unique] = vn.g
+#
+#
+# def open_not_empty(open_set):
+#     return len(open_set[0]) != 0  # Return True if the heap is not empty
+#
+#
+# def get_best(open_set):
+#     # val, key = heapq.heappop(open_set[0])
+#     # # try:
+#     # #     del open_set[1][key.unique]  # Attempt to delete the key
+#     # # except KeyError:
+#     # #     pass  # Do nothing if the key does not exist
+#     #
+#     # return key
+#
+#     while open_not_empty(open_set):
+#         val, key = heapq.heappop(open_set[0])
+#         key_str = key.unique
+#
+#         if key_str in open_set[1]:
+#             del open_set[1][key_str]
+#             return key
+#     return None
+#
+#
+# def add_to_closed(vn, closed_set):
+#     closed_set[vn.unique] = vn.g
+#
+#
+# def duplicate_in_open(vn, open_set):
+#     key_str = vn.unique
+#     if key_str in open_set[1]:
+#         val = open_set[1][key_str]
+#         if val <= vn.g:
+#             return True
+#     return False
+#
+#
+# def duplicate_in_closed(vn, closed_set):
+#     key_str = vn.unique
+#     if key_str in closed_set:
+#         val = closed_set[key_str]
+#         if val <= vn.g:
+#             return True
+#     return False
+#
+#
+# # Helper function to debug and print the path
+# def print_path(path):
+#     for i in range(len(path) - 1):
+#         print(f"[{path[i].state.get_state_str()}]", end=", ")
+#     print(path[-1].state.get_state_str())
+#
+#
+# def search(start_state, heuristic):
+#     open_set = create_open_set()
+#     closed_set = create_closed_set()
+#     start_node = search_node(start_state, 0, heuristic(start_state))
+#     add_to_open(start_node, open_set)
+#
+#     while open_not_empty(open_set):
+#
+#         current = get_best(open_set)
+#         if grid_robot_state.is_goal_state(current.state):
+#             path = []
+#             while current:
+#                 path.append(current)
+#                 current = current.prev
+#             path.reverse()
+#             return path
+#
+#         add_to_closed(current, closed_set)
+#
+#         for neighbor, edge_cost in current.get_neighbors():
+#             curr_neighbor = search_node(neighbor, current.g + edge_cost, heuristic(neighbor), current)
+#             if not duplicate_in_open(curr_neighbor, open_set) and not duplicate_in_closed(curr_neighbor, closed_set):
+#                 add_to_open(curr_neighbor, open_set)
+#
+#     return None
