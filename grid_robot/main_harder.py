@@ -29,7 +29,7 @@ if __name__ == '__main__':
     print(search_result[-1].g)
 
     for elem in search_result:
-        print(f'location {elem.state.get_location()} , cost = {elem.g}\n')
+        print(f'location {elem.state.location} , cost = {elem.g}\n')
 
 
 
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # print(search_result[-1].g)
     #
     # for elem in search_result:
-    #     print(f'location {elem.state.get_location()} , cost = {elem.g}\n')
+    #     print(f'location {elem.state.location} , cost = {elem.g}\n')
 
 
 

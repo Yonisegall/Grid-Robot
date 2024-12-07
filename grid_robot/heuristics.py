@@ -2,10 +2,9 @@ from grid_robot_state import grid_robot_state
 
 
 def base_heuristic(_grid_robot_state):
-    return abs(_grid_robot_state.get_location()[0] - _grid_robot_state.get_lamp_location()[0]) + \
-           abs(_grid_robot_state.get_location()[1] - _grid_robot_state.get_lamp_location()[1])
-
-
+    loc_x, loc_y = _grid_robot_state.location
+    loc_lamp_x, loc_lamp_y = _grid_robot_state.lamp_location
+    return abs(loc_x - loc_lamp_x) + abs(loc_y - loc_lamp_y)
 
 
 def advanced_heuristic(_grid_robot_state):
@@ -22,7 +21,6 @@ def advanced_heuristic(_grid_robot_state):
 
     # 3. Estimated cost to collect additional stairs (if needed)
     board = _grid_robot_state.board
-    # min_stairs_cost = float('inf')
     min_stairs_cost = 0
 
     if height_mismatch != 0:
@@ -36,12 +34,6 @@ def advanced_heuristic(_grid_robot_state):
     stairs_cost = min_stairs_cost if stairs_held < lamp_height else 0
 
     return manhattan_dist + height_mismatch + stairs_cost
-
-
-
-
-
-
 
 #
 # def advanced_heuristic(_grid_robot_state):
