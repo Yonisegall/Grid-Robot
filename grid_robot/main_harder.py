@@ -18,8 +18,8 @@ if __name__ == '__main__':
     lamp_h = 7
     lamp_location = (4, 2)
 
-    start_state = grid_robot_state(board= bitch_map, robot_location=robot_start_location, lamp_height=lamp_h,
-                                   lamp_location=lamp_location)
+    start_state = grid_robot_state(map=bitch_map, robot_location=robot_start_location,
+                                   lamp_height=lamp_h, lamp_location=lamp_location)
     start_time = time.time()
     search_result = search(start_state, advanced_heuristic)
     end_time = time.time() - start_time
@@ -36,11 +36,9 @@ if __name__ == '__main__':
 
 
 
-
-
-
     # # Big test case
-    # map = [            #
+    #
+    # map = [
     #     [0,  0, 0,  0, 0,  0,  0,  0],
     #     [1,  4, 2, -1, 0,  0,  0,  0],
     #     [0, -1, 0, -1, 1, -1, -1, -1],
