@@ -39,7 +39,8 @@ class search_node:
         self.h = h
         self.f = g + h
         self.prev = prev
-        self.unique = (self.state.unique, self.f)
+        # self.unique = (self.state.unique, self.f)
+        self.unique = f'{self.state.unique}, {self.f}'
 
     def __lt__(self, other):
         return (self.f < other.f) or (self.f == other.f and self.h < other.h)

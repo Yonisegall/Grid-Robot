@@ -123,7 +123,7 @@
 
 
 
-
+# ------------- The best so far ----------------
 import heapq
 from search_node import search_node
 from grid_robot_state import grid_robot_state
@@ -137,12 +137,15 @@ def create_closed_set():
     return {}
 
 def add_to_open(vn, open_set):
-    if vn.unique in open_set[1]:
-        open_set[1][vn.unique] = vn.g
-        heapq.heappush(open_set[0], (vn.f, vn))
-    else:
-        open_set[1][vn.unique] = vn.g
-        heapq.heappush(open_set[0], (vn.f, vn))
+    # if vn.unique in open_set[1]:
+    #     open_set[1][vn.unique] = vn.g
+    #     heapq.heappush(open_set[0], (vn.f, vn))
+    # else:
+    #     open_set[1][vn.unique] = vn.g
+    #     heapq.heappush(open_set[0], (vn.f, vn))
+
+    open_set[1][vn.unique] = vn.g
+    heapq.heappush(open_set[0], (vn.f, vn))
 
 def open_not_empty(open_set):
     return len(open_set[0]) != 0
@@ -156,16 +159,16 @@ def get_best(open_set):
     return None
 
 def add_to_closed(vn, closed_set):
-    closed_set[vn.state.unique] = vn.f
+    closed_set[vn.state.unique] = vn.g
 
 def duplicate_in_open(vn, open_set):
     if vn.unique in open_set[1]:
-        return open_set[1][vn.unique] >= vn.g
+        return open_set[1][vn.unique] <= vn.g
     return False
 
 def duplicate_in_closed(vn, closed_set):
     if vn.state.unique in closed_set:
-        return closed_set[vn.state.unique] >= vn.g
+        return closed_set[vn.state.unique] <= vn.g
     return False
 
 def search(start_state, heuristic):

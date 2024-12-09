@@ -2,6 +2,7 @@ from grid_robot_state import grid_robot_state
 
 
 def base_heuristic(_grid_robot_state):
+    """ base heuristic for the search, manhattan distance"""
     loc_x, loc_y = _grid_robot_state.location
     loc_lamp_x, loc_lamp_y = _grid_robot_state.lamp_location
     return abs(loc_x - loc_lamp_x) + abs(loc_y - loc_lamp_y)
@@ -9,6 +10,7 @@ def base_heuristic(_grid_robot_state):
 
 
 def advanced_heuristic(_grid_robot_state):
+    """ advanced heuristic for the search, manhattan distance"""
     if grid_robot_state.is_goal_state(_grid_robot_state):
         return 0
     lamp_height = _grid_robot_state.lamp_height
