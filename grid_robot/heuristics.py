@@ -7,6 +7,18 @@ def base_heuristic(_grid_robot_state):
     return abs(loc_x - loc_lamp_x) + abs(loc_y - loc_lamp_y)
 
 
+
+def advanced_heuristic(_grid_robot_state):
+    if grid_robot_state.is_goal_state(_grid_robot_state):
+        return 0
+    lamp_height = _grid_robot_state.lamp_height
+    stairs_held = _grid_robot_state.stairs
+    if stairs_held == 0:
+        return base_heuristic(_grid_robot_state) + lamp_height
+    else:
+        return (base_heuristic(_grid_robot_state) * stairs_held) + (lamp_height - stairs_held)
+
+
 # def advanced_heuristic(_grid_robot_state):
 #     robot_loc_x, robot_loc_y = _grid_robot_state.location
 #     lamp_height = _grid_robot_state.lamp_height
@@ -34,12 +46,4 @@ def base_heuristic(_grid_robot_state):
 #     stairs_cost = min_stairs_cost if stairs_held < lamp_height else 0
 #
 #     return manhattan_dist + height_mismatch + stairs_cost
-
-
-def advanced_heuristic(_grid_robot_state):
-    lamp_height = _grid_robot_state.lamp_height
-    stairs_held = _grid_robot_state.stairs
-    if stairs_held == 0:
-        return base_heuristic(_grid_robot_state) + lamp_height
-    else:
-        return (base_heuristic(_grid_robot_state) * stairs_held) + (lamp_height - stairs_held)
+#
