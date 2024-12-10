@@ -124,6 +124,10 @@
 
 
 # ------------- The best so far ----------------
+
+
+
+# ---------- The best imutability ------------------
 import heapq
 from search_node import search_node
 from grid_robot_state import grid_robot_state
@@ -153,8 +157,10 @@ def open_not_empty(open_set):
 def get_best(open_set):
     while open_not_empty(open_set):
         val, key = heapq.heappop(open_set[0])
+        # heapq.heapify(open_set[0])
         if key.unique in open_set[1]:
             del open_set[1][key.unique]
+            # heapq.heapify(open_set[0])
             return key
     return None
 
@@ -196,6 +202,17 @@ def search(start_state, heuristic):
                 add_to_open(curr_neighbor, open_set)
 
     return None
+
+
+
+
+
+
+
+
+
+
+
 
 
 

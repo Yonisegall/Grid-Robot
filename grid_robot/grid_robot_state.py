@@ -152,7 +152,7 @@
 
 
 
-
+# the best so far
 # class grid_robot_state:
 #     def __init__(self, robot_location, map=None, lamp_height=-1, lamp_location=(-1, -1), stairs=0):
 #
@@ -252,23 +252,25 @@ class grid_robot_state:
                _grid_robot_state.map[dx][dy] == _grid_robot_state.lamp_height and _grid_robot_state.stairs == 0
 
     def get_neighbors(self):
-        """return all the neighbors operators of current state"""
+        """return all the neighbors operators of current state i the problem"""
         loc_x, loc_y = self.location
         directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         neighbors = []
 
+        # 1: right, left, up and down neighbors
         for dx, dy in directions:
             if self.is_Valid((loc_x + dx, loc_y + dy)):
                 neighbors.append((grid_robot_state((loc_x + dx, loc_y + dy), self.map, self.lamp_height,
                                                    self.lamp_location, self.stairs), 1 + self.stairs))
 
+        # 2: The cell is stairs , "pick up" stairs neighbor
         cur_cell_stairs_weight = self.map[loc_x][loc_y]
-
         if cur_cell_stairs_weight != 0:  # Pick up stairs
             new_map = self.return_new_map(loc_x, loc_y, 0)
             neighbors.append((grid_robot_state(self.location, new_map, self.lamp_height, self.lamp_location,
                                                self.stairs + cur_cell_stairs_weight), 1))
 
+        # 3: already holding stairs, "dropped" stairs neighbor
         if self.stairs != 0 and cur_cell_stairs_weight == 0:  # Drop stairs
             new_map = self.return_new_map(loc_x, loc_y, cur_cell_stairs_weight + self.stairs)
             neighbors.append((grid_robot_state(self.location, new_map, self.lamp_height, self.lamp_location, 0), 1))
@@ -276,20 +278,17 @@ class grid_robot_state:
         return neighbors
 
     def return_new_map(self, x, y, num):
-        """ Copying the map and returns new update new one"""
+        """ Copying the map and returns new immutable update new one"""
         # Faster manual copy with immutability
-        return tuple(
-            tuple(num if (i == x and j == y) else cell for j, cell in enumerate(row))for i, row in enumerate(self.map)
-        )
+        # return tuple(
+        #     tuple(num if (i == x and j == y) else cell for j, cell in enumerate(row))for i, row in enumerate(self.map)
+        # )
+
+        new_board = [row[:] for row in self.map]  # Faster manual copy
+        new_board[x][y] = num
+        return new_board
 
     def is_Valid(self, other_state):
-        """ Checking if a location is valid inside the map"""
+        """ Checking if a location is valid inside the map borders"""
         row, col = other_state
         return 0 <= row < len(self.map) and 0 <= col < len(self.map[row]) and self.map[row][col] != -1
-
-
-
-
-
-
-

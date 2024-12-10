@@ -50,4 +50,3 @@ class search_node:
 
     def get_neighbors(self):
         return self.state.get_neighbors()
-
